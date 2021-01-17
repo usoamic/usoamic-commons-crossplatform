@@ -2,9 +2,9 @@ package io.usoamic.wallet.commons.usecases
 
 import io.reactivex.Single
 import io.usoamic.wallet.commons.models.dashboard.DashboardInfo
-import io.usoamic.wallet.commons.repositories.DbRepository
-import io.usoamic.wallet.commons.repositories.EthereumRepository
-import io.usoamic.wallet.commons.repositories.TokenRepository
+import io.usoamic.wallet.commons.repositories.api.DbRepository
+import io.usoamic.wallet.commons.repositories.api.EthereumRepository
+import io.usoamic.wallet.commons.repositories.api.TokenRepository
 import java.math.BigDecimal
 import java.math.BigInteger
 import javax.inject.Inject

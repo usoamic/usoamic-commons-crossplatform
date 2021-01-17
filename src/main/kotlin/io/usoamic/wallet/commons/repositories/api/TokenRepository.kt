@@ -1,4 +1,4 @@
-package io.usoamic.wallet.commons.repositories
+package io.usoamic.wallet.commons.repositories.api
 
 import io.reactivex.Single
 import io.usoamic.usoamickt.model.Transaction

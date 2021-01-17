@@ -1,4 +1,4 @@
-package io.usoamic.wallet.commons.repositories
+package io.usoamic.wallet.commons.repositories.api
 
 interface PreferencesRepository {
     fun getAddress(): String

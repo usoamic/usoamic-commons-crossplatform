@@ -1,4 +1,4 @@
-package io.usoamic.wallet.commons.repositories
+package io.usoamic.wallet.commons.repositories.impl
 
 import io.reactivex.Single
 import io.usoamic.usoamickt.core.Usoamic
@@ -8,6 +8,7 @@ import io.usoamic.wallet.commons.models.ethereum.toDomain
 import io.usoamic.wallet.commons.models.withdraw.WithdrawData
 import io.usoamic.wallet.commons.extensions.addDebugDelay
 import io.usoamic.wallet.commons.extensions.privateKey
+import io.usoamic.wallet.commons.repositories.api.EthereumRepository
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.Keys
 import org.web3j.crypto.WalletUtils

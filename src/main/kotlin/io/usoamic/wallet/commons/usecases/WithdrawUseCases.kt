@@ -4,9 +4,9 @@ import io.reactivex.Single
 import io.usoamic.usoamickt.enumcls.TxSpeed
 import io.usoamic.wallet.commons.models.withdraw.WithdrawCoin
 import io.usoamic.wallet.commons.models.withdraw.WithdrawData
-import io.usoamic.wallet.commons.repositories.EthereumRepository
-import io.usoamic.wallet.commons.repositories.TokenRepository
-import io.usoamic.wallet.commons.repositories.ValidateRepository
+import io.usoamic.wallet.commons.repositories.api.EthereumRepository
+import io.usoamic.wallet.commons.repositories.api.TokenRepository
+import io.usoamic.wallet.commons.repositories.api.ValidateRepository
 import java.math.BigDecimal
 import javax.inject.Inject
 

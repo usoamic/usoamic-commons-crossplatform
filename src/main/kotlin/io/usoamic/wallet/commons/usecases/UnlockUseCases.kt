@@ -1,10 +1,10 @@
 package io.usoamic.wallet.commons.usecases
 
 import io.reactivex.Single
-import io.usoamic.wallet.commons.repositories.EthereumRepository
-import io.usoamic.wallet.commons.repositories.PreferencesRepository
-import io.usoamic.wallet.commons.repositories.UserRepository
-import io.usoamic.wallet.commons.repositories.ValidateRepository
+import io.usoamic.wallet.commons.repositories.api.EthereumRepository
+import io.usoamic.wallet.commons.repositories.api.PreferencesRepository
+import io.usoamic.wallet.commons.repositories.api.UserRepository
+import io.usoamic.wallet.commons.repositories.api.ValidateRepository
 import io.usoamic.wallet.commons.api.DateCompat
 import javax.inject.Inject
 

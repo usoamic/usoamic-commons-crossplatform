@@ -1,4 +1,4 @@
-package io.usoamic.wallet.commons.repositories
+package io.usoamic.wallet.commons.repositories.impl
 
 import io.reactivex.Single
 import io.usoamic.usoamickt.core.Usoamic
@@ -10,6 +10,7 @@ import io.usoamic.wallet.commons.models.withdraw.WithdrawData
 import io.usoamic.wallet.commons.exceptions.ContractNullException
 import io.usoamic.wallet.commons.extensions.orZero
 import io.usoamic.wallet.commons.extensions.addDebugDelay
+import io.usoamic.wallet.commons.repositories.api.TokenRepository
 import java.math.BigDecimal
 import java.math.BigInteger
 import javax.inject.Inject

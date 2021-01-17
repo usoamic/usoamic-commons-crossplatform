@@ -1,6 +1,7 @@
-package io.usoamic.wallet.commons.repositories
+package io.usoamic.wallet.commons.repositories.impl
 
 import io.usoamic.wallet.commons.api.PreferencesCompat
+import io.usoamic.wallet.commons.repositories.api.PreferencesRepository
 import javax.inject.Inject
 
 class PreferencesRepositoryImpl @Inject constructor(

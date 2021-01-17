@@ -2,7 +2,7 @@ package io.usoamic.wallet.commons.usecases
 
 import io.reactivex.Single
 import io.usoamic.wallet.commons.models.ethereum.AccountCredentials
-import io.usoamic.wallet.commons.repositories.EthereumRepository
+import io.usoamic.wallet.commons.repositories.api.EthereumRepository
 import javax.inject.Inject
 
 class CreateAccountUseCases @Inject constructor(

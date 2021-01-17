@@ -1,7 +1,7 @@
 package io.usoamic.wallet.commons.usecases
 
 import io.reactivex.Single
-import io.usoamic.wallet.commons.repositories.UserRepository
+import io.usoamic.wallet.commons.repositories.api.UserRepository
 import javax.inject.Inject
 
 class StartUseCases @Inject constructor(

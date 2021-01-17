@@ -1,8 +1,9 @@
-package io.usoamic.wallet.commons.repositories
+package io.usoamic.wallet.commons.repositories.impl
 
 import io.reactivex.Completable
 import io.usoamic.validateutilkt.ValidateUtil
 import io.usoamic.wallet.commons.extensions.addDebugDelay
+import io.usoamic.wallet.commons.repositories.api.ValidateRepository
 import javax.inject.Inject
 
 class ValidateRepositoryImpl @Inject constructor() : ValidateRepository {
