@@ -1,6 +1,6 @@
-[![](https://jitpack.io/v/usoamic/usoamic-wallet-commons.svg)](https://jitpack.io/#usoamic/usoamic-wallet-commons)
-# UsoamicWallet Commons
-Common code for wallets.
+[![](https://jitpack.io/v/usoamic/usoamic-commons-crossplatform.svg)](https://jitpack.io/#usoamic/usoamic-commons-crossplatform)
+# Usoamic Commons for Crossplatform
+Common code for Kotlin-based applications.
 
 ## Gradle Setup
 ```gradle
@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.github.usoamic:usoamic-wallet-commons:v1.0.0'
+    implementation 'com.github.usoamic:usoamic-commons-crossplatform:v1.1.0'
 }
 ```
 
