@@ -1,5 +1,5 @@
 package io.usoamic.commons.crossplatform
 
-object Config {
+object UsoamicCommonsConfig {
     var DEBUG = false
 }
