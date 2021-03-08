@@ -1,7 +1,7 @@
 package io.usoamic.commons.crossplatform.repositories.impl
 
 import io.reactivex.Single
-import io.usoamic.commons.crossplatform.exceptions.ContractNullException
+import io.usoamic.commons.crossplatform.exceptions.ContractNullThrowable
 import io.usoamic.commons.crossplatform.extensions.addDebugDelay
 import io.usoamic.commons.crossplatform.extensions.orZero
 import io.usoamic.commons.crossplatform.models.history.TransactionItem
@@ -74,6 +74,6 @@ class TokenRepositoryImpl @Inject constructor(
     private fun BigInteger?.toCoin(): BigDecimal {
         return this?.let {
             Coin.fromSat(it).toBigDecimal()
-        } ?: throw ContractNullException("mapToCoin()")
+        } ?: throw ContractNullThrowable("mapToCoin()")
     }
 }
