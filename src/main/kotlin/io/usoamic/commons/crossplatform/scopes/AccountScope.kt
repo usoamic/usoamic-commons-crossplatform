@@ -1,7 +1,7 @@
-package io.usoamic.wallet.commons.di.scopes
+package io.usoamic.commons.crossplatform.scopes
 
 import javax.inject.Scope
 
 @Scope
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
-annotation class WalletScope
+annotation class AccountScope
