@@ -1,12 +1,12 @@
 package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
+import io.usoamic.commons.crossplatform.models.withdraw.WithdrawCoin
+import io.usoamic.commons.crossplatform.models.withdraw.WithdrawData
+import io.usoamic.commons.crossplatform.repositories.api.EthereumRepository
+import io.usoamic.commons.crossplatform.repositories.api.TokenRepository
+import io.usoamic.commons.crossplatform.repositories.api.ValidateRepository
 import io.usoamic.usoamickt.enumcls.TxSpeed
-import io.usoamic.wallet.commons.models.withdraw.WithdrawCoin
-import io.usoamic.wallet.commons.models.withdraw.WithdrawData
-import io.usoamic.wallet.commons.repositories.api.EthereumRepository
-import io.usoamic.wallet.commons.repositories.api.TokenRepository
-import io.usoamic.wallet.commons.repositories.api.ValidateRepository
 import java.math.BigDecimal
 import javax.inject.Inject
 

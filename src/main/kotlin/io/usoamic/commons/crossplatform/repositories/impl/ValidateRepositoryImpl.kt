@@ -1,9 +1,9 @@
 package io.usoamic.commons.crossplatform.repositories.impl
 
 import io.reactivex.Completable
+import io.usoamic.commons.crossplatform.extensions.addDebugDelay
+import io.usoamic.commons.crossplatform.repositories.api.ValidateRepository
 import io.usoamic.validateutilkt.ValidateUtil
-import io.usoamic.wallet.commons.extensions.addDebugDelay
-import io.usoamic.wallet.commons.repositories.api.ValidateRepository
 import javax.inject.Inject
 
 class ValidateRepositoryImpl @Inject constructor() : ValidateRepository {

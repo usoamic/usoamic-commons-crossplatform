@@ -1,7 +1,7 @@
 package io.usoamic.commons.crossplatform.repositories.api
 
-import io.usoamic.wallet.commons.models.dashboard.DashboardInfo
-import io.usoamic.wallet.commons.models.history.TransactionItem
+import io.usoamic.commons.crossplatform.models.dashboard.DashboardInfo
+import io.usoamic.commons.crossplatform.models.history.TransactionItem
 
 interface DbRepository {
     fun updateDashboardInfo(data: DashboardInfo)

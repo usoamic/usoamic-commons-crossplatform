@@ -1,9 +1,10 @@
 package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
-import io.usoamic.wallet.commons.models.history.TransactionItem
-import io.usoamic.wallet.commons.repositories.api.DbRepository
-import io.usoamic.wallet.commons.repositories.api.TokenRepository
+import io.usoamic.commons.crossplatform.models.history.TransactionItem
+import io.usoamic.commons.crossplatform.repositories.api.DbRepository
+import io.usoamic.commons.crossplatform.repositories.api.TokenRepository
+
 import java.math.BigInteger
 import javax.inject.Inject
 

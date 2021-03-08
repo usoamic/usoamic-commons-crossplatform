@@ -1,14 +1,14 @@
 package io.usoamic.commons.crossplatform.repositories.impl
 
 import io.reactivex.Single
+import io.usoamic.commons.crossplatform.extensions.addDebugDelay
+import io.usoamic.commons.crossplatform.extensions.privateKey
+import io.usoamic.commons.crossplatform.models.add.AddAccountModel
+import io.usoamic.commons.crossplatform.models.ethereum.AccountCredentials
+import io.usoamic.commons.crossplatform.models.ethereum.toDomain
+import io.usoamic.commons.crossplatform.models.withdraw.WithdrawData
+import io.usoamic.commons.crossplatform.repositories.api.EthereumRepository
 import io.usoamic.usoamickt.core.Usoamic
-import io.usoamic.wallet.commons.models.add.AddAccountModel
-import io.usoamic.wallet.commons.models.ethereum.AccountCredentials
-import io.usoamic.wallet.commons.models.ethereum.toDomain
-import io.usoamic.wallet.commons.models.withdraw.WithdrawData
-import io.usoamic.wallet.commons.extensions.addDebugDelay
-import io.usoamic.wallet.commons.extensions.privateKey
-import io.usoamic.wallet.commons.repositories.api.EthereumRepository
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.Keys
 import org.web3j.crypto.WalletUtils

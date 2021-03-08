@@ -1,6 +1,6 @@
 package io.usoamic.commons.crossplatform.models.ethereum
 
-import io.usoamic.wallet.commons.extensions.privateKey
+import io.usoamic.commons.crossplatform.extensions.privateKey
 import org.web3j.crypto.Credentials
 
 data class AccountCredentials(

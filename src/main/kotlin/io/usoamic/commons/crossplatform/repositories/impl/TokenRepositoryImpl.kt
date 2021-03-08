@@ -1,16 +1,16 @@
 package io.usoamic.commons.crossplatform.repositories.impl
 
 import io.reactivex.Single
+import io.usoamic.commons.crossplatform.exceptions.ContractNullException
+import io.usoamic.commons.crossplatform.extensions.addDebugDelay
+import io.usoamic.commons.crossplatform.extensions.orZero
+import io.usoamic.commons.crossplatform.models.history.TransactionItem
+import io.usoamic.commons.crossplatform.models.history.toDomain
+import io.usoamic.commons.crossplatform.models.withdraw.WithdrawData
+import io.usoamic.commons.crossplatform.repositories.api.TokenRepository
 import io.usoamic.usoamickt.core.Usoamic
 import io.usoamic.usoamickt.model.Transaction
 import io.usoamic.usoamickt.util.Coin
-import io.usoamic.wallet.commons.models.history.TransactionItem
-import io.usoamic.wallet.commons.models.history.toDomain
-import io.usoamic.wallet.commons.models.withdraw.WithdrawData
-import io.usoamic.commons.crossplatform.exceptions.ContractNullException
-import io.usoamic.wallet.commons.extensions.orZero
-import io.usoamic.wallet.commons.extensions.addDebugDelay
-import io.usoamic.wallet.commons.repositories.api.TokenRepository
 import java.math.BigDecimal
 import java.math.BigInteger
 import javax.inject.Inject
@@ -74,6 +74,6 @@ class TokenRepositoryImpl @Inject constructor(
     private fun BigInteger?.toCoin(): BigDecimal {
         return this?.let {
             Coin.fromSat(it).toBigDecimal()
-        } ?: throw io.usoamic.commons.crossplatform.exceptions.ContractNullException("mapToCoin()")
+        } ?: throw ContractNullException("mapToCoin()")
     }
 }

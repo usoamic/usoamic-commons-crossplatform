@@ -1,8 +1,8 @@
 package io.usoamic.commons.crossplatform.models.base
 
-sealed class ErrorArguments(val throwable: Throwable) {
+sealed class ErrorArguments(open val throwable: Throwable) {
     val message get() = throwable.message
 
-    data class Warning(private val t: Throwable) : ErrorArguments(t)
-    data class Fatal(private val t: Throwable) : ErrorArguments(t)
+    data class Warning(override val throwable: Throwable) : ErrorArguments(throwable)
+    data class Fatal(override val throwable: Throwable) : ErrorArguments(throwable)
 }

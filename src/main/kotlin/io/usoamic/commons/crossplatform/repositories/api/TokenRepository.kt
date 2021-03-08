@@ -1,9 +1,9 @@
 package io.usoamic.commons.crossplatform.repositories.api
 
 import io.reactivex.Single
+import io.usoamic.commons.crossplatform.models.history.TransactionItem
+import io.usoamic.commons.crossplatform.models.withdraw.WithdrawData
 import io.usoamic.usoamickt.model.Transaction
-import io.usoamic.wallet.commons.models.history.TransactionItem
-import io.usoamic.wallet.commons.models.withdraw.WithdrawData
 import java.math.BigDecimal
 import java.math.BigInteger
 
