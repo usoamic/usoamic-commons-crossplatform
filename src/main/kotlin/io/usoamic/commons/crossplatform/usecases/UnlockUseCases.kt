@@ -27,7 +27,7 @@ class UnlockUseCases @Inject constructor(
 
     fun saveData(address: String) {
         mPreferencesRepository.setAddress(address)
-        mPreferencesRepository.setUnlockTime(mDateCompat.currentTimestamp)
+        mPreferencesRepository.setLastActionTime(mDateCompat.currentTimestamp)
     }
 
     fun removePreferences() = mPreferencesRepository.removeAll()
