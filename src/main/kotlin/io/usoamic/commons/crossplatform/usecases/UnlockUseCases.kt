@@ -2,10 +2,7 @@ package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
 import io.usoamic.commons.crossplatform.api.DateCompat
-import io.usoamic.commons.crossplatform.repositories.api.EthereumRepository
-import io.usoamic.commons.crossplatform.repositories.api.PreferencesRepository
-import io.usoamic.commons.crossplatform.repositories.api.UserRepository
-import io.usoamic.commons.crossplatform.repositories.api.ValidateRepository
+import io.usoamic.commons.crossplatform.repositories.api.*
 import javax.inject.Inject
 
 class UnlockUseCases @Inject constructor(
@@ -13,15 +10,13 @@ class UnlockUseCases @Inject constructor(
     private val mEthereumRepository: EthereumRepository,
     private val mUserRepository: UserRepository,
     private val mPreferencesRepository: PreferencesRepository,
-    private val mDateCompat: DateCompat
+    private val mDateCompat: DateCompat,
+    private val mDatabaseRepository: DbRepository
 ) {
     fun getAddress(password: String): Single<String> {
         return mValidateRepository.validatePassword(password)
             .andThen(
                 mEthereumRepository.getAddress(password)
-                    .map {
-                        it
-                    }
             )
     }
 
@@ -32,5 +27,11 @@ class UnlockUseCases @Inject constructor(
 
     fun removePreferences() = mPreferencesRepository.removeAll()
 
-    fun removeAccount() = mUserRepository.removeAccount()
+    fun removeAccount() {
+        mUserRepository.removeAccount()
+    }
+
+    fun clearDb() {
+        mDatabaseRepository.removeAll()
+    }
 }
