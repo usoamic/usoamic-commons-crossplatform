@@ -9,6 +9,8 @@ import java.util.concurrent.TimeUnit
 
 fun <T> Single<T>.subscribeOnIo(): Single<T> = subscribeOn(Schedulers.io())
 
+fun <T> Completable.subscribeOnIo(): Completable = subscribeOn(Schedulers.io())
+
 fun <T> Single<T>.addDebugDelay(): Single<T> {
     if(UsoamicCommonsConfig.DEBUG) {
         return delay(2, TimeUnit.SECONDS)
