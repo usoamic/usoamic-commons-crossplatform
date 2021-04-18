@@ -1,5 +1,6 @@
 package io.usoamic.commons.crossplatform.usecases
 
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.usoamic.commons.crossplatform.api.DateCompat
 import io.usoamic.commons.crossplatform.repositories.api.*
@@ -29,11 +30,14 @@ class UnlockUseCases @Inject constructor(
         mPreferencesRepository.removeAll()
     }
 
-    fun removeAccount(): Single<Boolean> {
+    fun removeAccount(): Completable {
         return mUserRepository.removeAccount()
+            .ignoreElement()
     }
 
-    fun clearDb() {
-        mDatabaseRepository.removeAll()
+    fun clearDb(): Completable {
+        return Completable.fromCallable {
+            mDatabaseRepository.removeAll()
+        }
     }
 }
