@@ -5,6 +5,6 @@ fun use(callback: () -> Unit) {
         callback.invoke()
     }
     catch (e: Throwable) {
-
+        e.printStackTrace()
     }
 }
