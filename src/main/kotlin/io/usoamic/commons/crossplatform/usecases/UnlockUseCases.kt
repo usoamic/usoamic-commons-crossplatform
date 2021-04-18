@@ -25,10 +25,12 @@ class UnlockUseCases @Inject constructor(
         mPreferencesRepository.setLastActionTime(mDateCompat.currentTimestamp)
     }
 
-    fun removePreferences() = mPreferencesRepository.removeAll()
+    fun removePreferences() {
+        mPreferencesRepository.removeAll()
+    }
 
-    fun removeAccount() {
-        mUserRepository.removeAccount()
+    fun removeAccount(): Single<Boolean> {
+        return mUserRepository.removeAccount()
     }
 
     fun clearDb() {
