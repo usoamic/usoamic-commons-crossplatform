@@ -4,13 +4,29 @@
 
 ext.deps = [:]
 def versions = [:]
-versions.kotlin = '1.4.21'
+
+def isAndroid = false
+
+versions.kotlin = '1.4.32'
 versions.rxjava2 = '2.2.19'
 versions.rxkotlin2 = '2.4.0'
-versions.usoamickt = '1.2.1'
+
+if (isAndroid) {
+    versions.usoamickt = '1.2.1-android'
+} else {
+    versions.usoamickt = '1.2.1'
+}
+
 versions.validateutilkt = '1.0.0'
 versions.gson = "2.8.5"
-versions.web3j = "4.8.1"
+
+if (isAndroid) {
+    versions.web3j = "4.8.4"
+}
+else {
+    versions.web3j = "4.6.0-android"
+}
+
 versions.dagger = '2.27'
 versions.zxing = "3.4.0"
 ext.versions = versions
