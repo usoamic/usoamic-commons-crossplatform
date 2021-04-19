@@ -9,4 +9,6 @@ interface DbRepository {
 
     fun getDashboardInfo(): DashboardInfo?
     fun getTransactions(): List<TransactionItem>
+
+    fun removeAll()
 }

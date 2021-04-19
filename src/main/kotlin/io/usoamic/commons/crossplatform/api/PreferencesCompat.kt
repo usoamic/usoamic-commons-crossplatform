@@ -10,7 +10,7 @@ interface PreferencesCompat {
 
     object Key {
         const val SHARED_PREFS: String = "sharedPrefs"
-        const val TIMESTAMP: String = "date"
+        const val LAST_ACTION_TIMESTAMP: String = "date"
         const val ADDRESS: String = "address"
     }
 }
