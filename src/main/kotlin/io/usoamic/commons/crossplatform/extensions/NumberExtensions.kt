@@ -6,7 +6,10 @@ import java.math.BigInteger
 import java.text.NumberFormat
 import java.util.*
 
-private val formatter = NumberFormat.getInstance(Locale.US)
+private val formatter = NumberFormat.getInstance(Locale.US).apply {
+    minimumFractionDigits = 0
+    maximumFractionDigits = 18
+}
 
 fun BigInteger?.orZero(): BigInteger = this ?: BigInteger.ZERO
 
