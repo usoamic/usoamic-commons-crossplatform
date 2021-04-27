@@ -2,7 +2,7 @@ package io.usoamic.commons.crossplatform.repositories.api
 
 import io.usoamic.commons.crossplatform.models.repository.dashboard.DashboardEntity
 import io.usoamic.commons.crossplatform.models.repository.history.TransactionEntity
-import io.usoamic.commons.crossplatform.models.usecases.notes.NoteItemModel
+import io.usoamic.commons.crossplatform.models.repository.notes.NoteEntity
 
 interface DbRepository {
     fun updateDashboardInfo(data: DashboardEntity)
@@ -11,8 +11,8 @@ interface DbRepository {
     fun getDashboardInfo(): DashboardEntity?
     fun getTransactions(): List<TransactionEntity>
 
-    fun addNote(data: NoteItemModel)
-    fun getNotes(): List<NoteItemModel>
+    fun addNote(data: NoteEntity)
+    fun getNotes(): List<NoteEntity>
 
     fun removeAll()
 }
