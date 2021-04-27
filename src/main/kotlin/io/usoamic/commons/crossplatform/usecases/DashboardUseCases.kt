@@ -1,7 +1,9 @@
 package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
-import io.usoamic.commons.crossplatform.models.dashboard.DashboardInfo
+import io.usoamic.commons.crossplatform.mappers.local.toItem
+import io.usoamic.commons.crossplatform.models.repository.dashboard.DashboardEntity
+import io.usoamic.commons.crossplatform.models.usecases.dashboard.DashboardModel
 import io.usoamic.commons.crossplatform.repositories.api.DbRepository
 import io.usoamic.commons.crossplatform.repositories.api.EthereumRepository
 import io.usoamic.commons.crossplatform.repositories.api.TokenRepository
@@ -14,7 +16,7 @@ class DashboardUseCases @Inject constructor(
     private val mEthereumRepository: EthereumRepository,
     private val mDbRepository: DbRepository
 ) {
-    fun getDashboardInfo(forceUpdate: Boolean): Single<DashboardInfo> {
+    fun getDashboardInfo(forceUpdate: Boolean): Single<DashboardModel> {
         return if(forceUpdate) {
             getDashboardInfoFromNetwork()
         }
@@ -23,20 +25,20 @@ class DashboardUseCases @Inject constructor(
         }
     }
 
-    private fun getDashboardInfoFromCache(): Single<DashboardInfo> {
+    private fun getDashboardInfoFromCache(): Single<DashboardModel> {
         return mDbRepository.getDashboardInfo()?.let {
-            Single.just(it)
+            Single.just(it.toItem())
         } ?: getDashboardInfoFromNetwork()
     }
 
-    private fun getDashboardInfoFromNetwork(): Single<DashboardInfo> {
+    private fun getDashboardInfoFromNetwork(): Single<DashboardModel> {
         return Single.zip(
             mEthereumRepository.ethBalance,
             mTokenRepository.usoBalance,
             mEthereumRepository.ethHeight,
             mTokenRepository.usoSupply
         ) { ethBalance: BigDecimal, usoBalance: BigDecimal, ethHeight: BigInteger, usoSupply: BigDecimal ->
-            DashboardInfo(
+            DashboardEntity(
                 ethBalance,
                 usoBalance,
                 ethHeight,
@@ -45,7 +47,7 @@ class DashboardUseCases @Inject constructor(
         }
             .map {
                 mDbRepository.updateDashboardInfo(it)
-                it
+                it.toItem()
             }
     }
 }

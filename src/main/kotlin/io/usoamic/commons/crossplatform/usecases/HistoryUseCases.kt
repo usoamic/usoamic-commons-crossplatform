@@ -1,7 +1,10 @@
 package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
-import io.usoamic.commons.crossplatform.models.history.TransactionInfoItem
+import io.usoamic.commons.crossplatform.mappers.local.mapEachToItem
+import io.usoamic.commons.crossplatform.mappers.local.toItem
+import io.usoamic.commons.crossplatform.models.repository.history.TransactionEntity
+import io.usoamic.commons.crossplatform.models.usecases.history.TransactionItem
 import io.usoamic.commons.crossplatform.repositories.api.DbRepository
 import io.usoamic.commons.crossplatform.repositories.api.TokenRepository
 
@@ -12,7 +15,7 @@ class HistoryUseCases @Inject constructor(
     private val mTokenRepository: TokenRepository,
     private val mDbRepository: DbRepository
 ) {
-    fun getTransactions(forceUpdate: Boolean): Single<List<TransactionInfoItem>> {
+    fun getTransactions(forceUpdate: Boolean): Single<List<TransactionItem>> {
         return if(forceUpdate) {
             getTransactionsFromNetwork()
         }
@@ -26,20 +29,20 @@ class HistoryUseCases @Inject constructor(
             }
     }
 
-    private fun getTransactionsFromCache(): Single<List<TransactionInfoItem>> {
-        val items = mDbRepository.getTransactions()
-        return if(items.isEmpty()) {
+    private fun getTransactionsFromCache(): Single<List<TransactionItem>> {
+        val entities = mDbRepository.getTransactions()
+        return if(entities.isEmpty()) {
             getTransactionsFromNetwork()
         }
         else {
-            Single.just(items)
+            Single.just(entities.mapEachToItem())
         }
     }
 
-    private fun getTransactionsFromNetwork(): Single<List<TransactionInfoItem>> {
+    private fun getTransactionsFromNetwork(): Single<List<TransactionItem>> {
         return mTokenRepository.numberOfUserTransactions
             .map { size ->
-                val items = mutableListOf<TransactionInfoItem>()
+                val items = mutableListOf<TransactionEntity>()
                 var i = BigInteger.ZERO
                 while (i < size) {
                     val tx = mTokenRepository.getTransactionForAccount(i).blockingGet()
@@ -52,7 +55,7 @@ class HistoryUseCases @Inject constructor(
                 items.forEach {
                     mDbRepository.addTransactionItem(it)
                 }
-                items
+                items.mapEachToItem()
             }
     }
 }
