@@ -49,7 +49,7 @@ class HistoryUseCases @Inject constructor(
                     items.add(tx)
                     i++
                 }
-                items.toList()
+                items
             }
             .map { items ->
                 items.forEach {
