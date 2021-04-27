@@ -4,7 +4,8 @@ import io.reactivex.Single
 import io.usoamic.commons.crossplatform.extensions.addDebugDelay
 import io.usoamic.commons.crossplatform.extensions.orZero
 import io.usoamic.commons.crossplatform.mappers.entity.toEntity
-import io.usoamic.commons.crossplatform.models.usecases.notes.NoteItemModel
+import io.usoamic.commons.crossplatform.models.repository.notes.NoteEntity
+import io.usoamic.commons.crossplatform.models.usecases.notes.NoteItem
 import io.usoamic.commons.crossplatform.repositories.api.NotesRepository
 import io.usoamic.usoamickt.core.Usoamic
 import java.math.BigInteger
@@ -29,7 +30,7 @@ class NotesRepositoryImpl @Inject constructor(
             }.addDebugDelay()
         }
 
-    override fun getNote(refId: BigInteger): Single<NoteItemModel> {
+    override fun getNote(refId: BigInteger): Single<NoteEntity> {
         return Single.fromCallable {
             usoamic.getNote(refId)
         }.map {
@@ -37,7 +38,7 @@ class NotesRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getNoteForAccount(id: BigInteger): Single<NoteItemModel> {
+    override fun getNoteForAccount(id: BigInteger): Single<NoteEntity> {
         return Single.fromCallable {
             usoamic.getNoteByAuthor(address, id)
         }.map {
