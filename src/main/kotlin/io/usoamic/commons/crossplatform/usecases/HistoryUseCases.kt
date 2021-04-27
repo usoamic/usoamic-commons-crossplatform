@@ -1,7 +1,7 @@
 package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
-import io.usoamic.commons.crossplatform.models.history.TransactionItem
+import io.usoamic.commons.crossplatform.models.history.TransactionInfoItem
 import io.usoamic.commons.crossplatform.repositories.api.DbRepository
 import io.usoamic.commons.crossplatform.repositories.api.TokenRepository
 
@@ -12,7 +12,7 @@ class HistoryUseCases @Inject constructor(
     private val mTokenRepository: TokenRepository,
     private val mDbRepository: DbRepository
 ) {
-    fun getTransactions(forceUpdate: Boolean): Single<List<TransactionItem>> {
+    fun getTransactions(forceUpdate: Boolean): Single<List<TransactionInfoItem>> {
         return if(forceUpdate) {
             getTransactionsFromNetwork()
         }
@@ -26,7 +26,7 @@ class HistoryUseCases @Inject constructor(
             }
     }
 
-    private fun getTransactionsFromCache(): Single<List<TransactionItem>> {
+    private fun getTransactionsFromCache(): Single<List<TransactionInfoItem>> {
         val items = mDbRepository.getTransactions()
         return if(items.isEmpty()) {
             getTransactionsFromNetwork()
@@ -36,10 +36,10 @@ class HistoryUseCases @Inject constructor(
         }
     }
 
-    private fun getTransactionsFromNetwork(): Single<List<TransactionItem>> {
+    private fun getTransactionsFromNetwork(): Single<List<TransactionInfoItem>> {
         return mTokenRepository.numberOfUserTransactions
             .map { size ->
-                val items = mutableListOf<TransactionItem>()
+                val items = mutableListOf<TransactionInfoItem>()
                 var i = BigInteger.ZERO
                 while (i < size) {
                     val tx = mTokenRepository.getTransactionForAccount(i).blockingGet()

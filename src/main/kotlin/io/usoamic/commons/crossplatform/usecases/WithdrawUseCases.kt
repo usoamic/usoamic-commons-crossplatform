@@ -2,7 +2,7 @@ package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
 import io.usoamic.commons.crossplatform.models.withdraw.WithdrawCoin
-import io.usoamic.commons.crossplatform.models.withdraw.WithdrawData
+import io.usoamic.commons.crossplatform.models.withdraw.WithdrawInfo
 import io.usoamic.commons.crossplatform.repositories.api.EthereumRepository
 import io.usoamic.commons.crossplatform.repositories.api.TokenRepository
 import io.usoamic.commons.crossplatform.repositories.api.ValidateRepository
@@ -27,7 +27,7 @@ class WithdrawUseCases @Inject constructor(
             .andThen(mValidateRepository.validateTransferValue(value))
             .andThen(
                 Single.defer {
-                    val data = WithdrawData(
+                    val data = WithdrawInfo(
                         password = password,
                         to = to,
                         value = BigDecimal(value),

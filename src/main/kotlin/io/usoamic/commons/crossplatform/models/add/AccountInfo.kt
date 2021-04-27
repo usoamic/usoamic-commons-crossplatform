@@ -1,5 +1,5 @@
 package io.usoamic.commons.crossplatform.models.add
 
-data class AddAccountModel(
+data class AddAccountInfo(
     val name: String
 )

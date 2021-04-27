@@ -3,7 +3,7 @@ package io.usoamic.commons.crossplatform.models.history
 import io.usoamic.usoamickt.model.Transaction
 import io.usoamic.usoamickt.util.Coin
 
-data class TransactionItem(
+data class TransactionInfoItem(
     val type: TransactionType,
     val txId: Long,
     val from: String,
@@ -17,7 +17,7 @@ enum class TransactionType {
     WITHDRAW
 }
 
-fun Transaction.toDomain(owner: String): TransactionItem = TransactionItem(
+fun Transaction.toDomain(owner: String): TransactionInfoItem = TransactionInfoItem(
     type = when (owner) {
         from -> {
             TransactionType.WITHDRAW

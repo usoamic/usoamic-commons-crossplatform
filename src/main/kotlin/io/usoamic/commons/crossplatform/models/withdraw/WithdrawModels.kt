@@ -3,7 +3,7 @@ package io.usoamic.commons.crossplatform.models.withdraw
 import io.usoamic.usoamickt.enumcls.TxSpeed
 import java.math.BigDecimal
 
-data class WithdrawData(
+data class WithdrawInfo(
     val password: String,
     val to: String,
     val value: BigDecimal,

@@ -4,9 +4,9 @@ import io.reactivex.Single
 import io.usoamic.commons.crossplatform.extensions.addDebugDelay
 import io.usoamic.commons.crossplatform.extensions.privateKey
 import io.usoamic.commons.crossplatform.models.add.AddAccountModel
-import io.usoamic.commons.crossplatform.models.ethereum.AccountCredentials
+import io.usoamic.commons.crossplatform.models.ethereum.AccountCredentialsInfo
 import io.usoamic.commons.crossplatform.models.ethereum.toDomain
-import io.usoamic.commons.crossplatform.models.withdraw.WithdrawData
+import io.usoamic.commons.crossplatform.models.withdraw.WithdrawInfo
 import io.usoamic.commons.crossplatform.repositories.api.EthereumRepository
 import io.usoamic.usoamickt.core.Usoamic
 import org.web3j.crypto.Credentials
@@ -36,7 +36,7 @@ class EthereumRepositoryImpl @Inject constructor(
             .addDebugDelay()
     }
 
-    override fun createCredentials(): Single<AccountCredentials> {
+    override fun createCredentials(): Single<AccountCredentialsInfo> {
         return Single.fromCallable {
             var credentials: Credentials
             do {
@@ -63,7 +63,7 @@ class EthereumRepositoryImpl @Inject constructor(
                 .addDebugDelay()
         }
 
-    override fun withdraw(data: WithdrawData): Single<String> {
+    override fun withdraw(data: WithdrawInfo): Single<String> {
         return Single.fromCallable {
             val value = Convert.toWei(data.value, Convert.Unit.ETHER)
             usoamic.transferEth(

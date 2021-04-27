@@ -4,9 +4,9 @@ import io.reactivex.Single
 import io.usoamic.commons.crossplatform.exceptions.ContractNullThrowable
 import io.usoamic.commons.crossplatform.extensions.addDebugDelay
 import io.usoamic.commons.crossplatform.extensions.orZero
-import io.usoamic.commons.crossplatform.models.history.TransactionItem
+import io.usoamic.commons.crossplatform.models.history.TransactionInfoItem
 import io.usoamic.commons.crossplatform.models.history.toDomain
-import io.usoamic.commons.crossplatform.models.withdraw.WithdrawData
+import io.usoamic.commons.crossplatform.models.withdraw.WithdrawInfo
 import io.usoamic.commons.crossplatform.repositories.api.TokenRepository
 import io.usoamic.usoamickt.core.Usoamic
 import io.usoamic.usoamickt.model.Transaction
@@ -49,7 +49,7 @@ class TokenRepositoryImpl @Inject constructor(
         }.addDebugDelay()
     }
 
-    override fun getTransactionForAccount(txId: BigInteger): Single<TransactionItem> {
+    override fun getTransactionForAccount(txId: BigInteger): Single<TransactionInfoItem> {
         return Single.fromCallable {
             usoamic.getTransactionByAddress(usoamic.address, txId)
         }.map {
@@ -58,7 +58,7 @@ class TokenRepositoryImpl @Inject constructor(
         // .addDebugDelay()
     }
 
-    override fun withdraw(data: WithdrawData): Single<String> {
+    override fun withdraw(data: WithdrawInfo): Single<String> {
         return Single.fromCallable {
             val value = Coin.fromCoin(data.value).toSat()
             usoamic.transferUso(

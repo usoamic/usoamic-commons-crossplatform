@@ -1,8 +1,8 @@
 package io.usoamic.commons.crossplatform.repositories.api
 
 import io.reactivex.Single
-import io.usoamic.commons.crossplatform.models.history.TransactionItem
-import io.usoamic.commons.crossplatform.models.withdraw.WithdrawData
+import io.usoamic.commons.crossplatform.models.history.TransactionInfoItem
+import io.usoamic.commons.crossplatform.models.withdraw.WithdrawInfo
 import io.usoamic.usoamickt.model.Transaction
 import java.math.BigDecimal
 import java.math.BigInteger
@@ -17,9 +17,9 @@ interface TokenRepository {
 
     fun getTransactionForAccount(
         txId: BigInteger
-    ): Single<TransactionItem>
+    ): Single<TransactionInfoItem>
 
     fun withdraw(
-        data: WithdrawData
+        data: WithdrawInfo
     ): Single<String>
 }

@@ -34,16 +34,15 @@ class DashboardUseCases @Inject constructor(
             mEthereumRepository.ethBalance,
             mTokenRepository.usoBalance,
             mEthereumRepository.ethHeight,
-            mTokenRepository.usoSupply,
-            { ethBalance: BigDecimal, usoBalance: BigDecimal, ethHeight: BigInteger, usoSupply: BigDecimal ->
-                DashboardInfo(
-                    ethBalance,
-                    usoBalance,
-                    ethHeight,
-                    usoSupply
-                )
-            }
-        )
+            mTokenRepository.usoSupply
+        ) { ethBalance: BigDecimal, usoBalance: BigDecimal, ethHeight: BigInteger, usoSupply: BigDecimal ->
+            DashboardInfo(
+                ethBalance,
+                usoBalance,
+                ethHeight,
+                usoSupply
+            )
+        }
             .map {
                 mDbRepository.updateDashboardInfo(it)
                 it
