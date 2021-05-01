@@ -6,6 +6,7 @@ import io.usoamic.commons.crossplatform.models.repository.notes.NoteEntity
 import io.usoamic.commons.crossplatform.models.usecases.notes.NoteItem
 import io.usoamic.commons.crossplatform.repositories.api.DbRepository
 import io.usoamic.commons.crossplatform.repositories.api.NotesRepository
+import io.usoamic.usoamickt.enumcls.NoteVisibility
 import java.math.BigInteger
 import javax.inject.Inject
 
@@ -13,18 +14,17 @@ class NotesUseCases @Inject constructor(
     private val mNotesRepository: NotesRepository,
     private val mDbRepository: DbRepository
 ) {
-    fun addPublicNote(password: String, content: String): Single<String> {
-        return mNotesRepository.addPublicNote(
-            password = password,
-            content = content
-        )
-    }
-
-    fun addUnlistedNote(password: String, content: String): Single<String> {
-        return mNotesRepository.addUnlistedNote(
-            password = password,
-            content = content
-        )
+    fun addNote(password: String, content: String, visibility: NoteVisibility): Single<String> {
+        return when (visibility) {
+            NoteVisibility.PUBLIC -> mNotesRepository.addPublicNote(
+                password = password,
+                content = content
+            )
+            NoteVisibility.UNLISTED -> mNotesRepository.addUnlistedNote(
+                password = password,
+                content = content
+            )
+        }
     }
 
     fun getNotes(forceUpdate: Boolean): Single<List<NoteItem>> {
