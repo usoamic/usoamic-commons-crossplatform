@@ -33,12 +33,12 @@ repositories {
 dependencies {
     implementation deps.gson
     implementation deps.kotlin.stdlib
-    implementation deps.web3j
+    api deps.web3j
     implementation deps.zxing
     implementation deps.rx.java
     implementation deps.rx.kotlin
-    implementation deps.usoamic.kt
-    implementation deps.usoamic.validateutilkt
+    api deps.usoamic.kt
+    api deps.usoamic.validateutilkt
 
     implementation deps.dagger.runtime
 }
