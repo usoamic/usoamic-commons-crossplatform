@@ -6,7 +6,7 @@ import io.usoamic.commons.crossplatform.models.usecases.notes.NoteItem
 fun NoteEntity.toItem(): NoteItem {
     return NoteItem(
         id = noteId.toLong(),
-        visibility = visibility,
+        type = noteType,
         refId = noteRefId.toLong(),
         content = content,
         author = author,

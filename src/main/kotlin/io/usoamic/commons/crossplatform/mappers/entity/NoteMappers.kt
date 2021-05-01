@@ -5,7 +5,7 @@ import io.usoamic.usoamickt.model.Note
 
 internal fun Note.toEntity(): NoteEntity = NoteEntity(
     noteId = noteId,
-    visibility = visibility,
+    noteType = type,
     noteRefId = noteRefId,
     content = content,
     author = author,
