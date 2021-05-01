@@ -4,8 +4,8 @@ import io.reactivex.Single
 import io.usoamic.commons.crossplatform.extensions.addDebugDelay
 import io.usoamic.commons.crossplatform.extensions.orZero
 import io.usoamic.commons.crossplatform.mappers.entity.toEntity
+import io.usoamic.commons.crossplatform.models.repository.notes.AddNoteRequest
 import io.usoamic.commons.crossplatform.models.repository.notes.NoteEntity
-import io.usoamic.commons.crossplatform.models.usecases.notes.NoteItem
 import io.usoamic.commons.crossplatform.repositories.api.NotesRepository
 import io.usoamic.usoamickt.core.Usoamic
 import java.math.BigInteger
@@ -46,15 +46,23 @@ class NotesRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun addPublicNote(password: String, content: String): Single<String> {
+    override fun addPublicNote(data: AddNoteRequest): Single<String> {
         return Single.fromCallable {
-            usoamic.addPublicNote(password, content)
+            usoamic.addPublicNote(
+                password = data.password,
+                content = data.content,
+                txSpeed = data.txSpeed
+            )
         }.addDebugDelay()
     }
 
-    override fun addUnlistedNote(password: String, content: String): Single<String> {
+    override fun addUnlistedNote(data: AddNoteRequest): Single<String> {
         return Single.fromCallable {
-            usoamic.addUnlistedNote(password, content)
+            usoamic.addUnlistedNote(
+                password = data.password,
+                content = data.content,
+                txSpeed = data.txSpeed
+            )
         }.addDebugDelay()
     }
 

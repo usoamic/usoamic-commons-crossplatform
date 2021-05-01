@@ -2,11 +2,13 @@ package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
 import io.usoamic.commons.crossplatform.mappers.local.mapEachToItem
+import io.usoamic.commons.crossplatform.models.repository.notes.AddNoteRequest
 import io.usoamic.commons.crossplatform.models.repository.notes.NoteEntity
 import io.usoamic.commons.crossplatform.models.usecases.notes.NoteItem
 import io.usoamic.commons.crossplatform.repositories.api.DbRepository
 import io.usoamic.commons.crossplatform.repositories.api.NotesRepository
-import io.usoamic.usoamickt.enumcls.NoteVisibility
+import io.usoamic.usoamickt.enumcls.NoteType
+import io.usoamic.usoamickt.enumcls.TxSpeed
 import java.math.BigInteger
 import javax.inject.Inject
 
@@ -14,16 +16,16 @@ class NotesUseCases @Inject constructor(
     private val mNotesRepository: NotesRepository,
     private val mDbRepository: DbRepository
 ) {
-    fun addNote(password: String, content: String, visibility: NoteVisibility): Single<String> {
-        return when (visibility) {
-            NoteVisibility.PUBLIC -> mNotesRepository.addPublicNote(
-                password = password,
-                content = content
-            )
-            NoteVisibility.UNLISTED -> mNotesRepository.addUnlistedNote(
-                password = password,
-                content = content
-            )
+    fun addNote(password: String, content: String, noteType: NoteType, txSpeed: TxSpeed = TxSpeed.Auto): Single<String> {
+        val data = AddNoteRequest(
+            password = password,
+            content = content,
+            txSpeed = txSpeed
+        )
+
+        return when (noteType) {
+            NoteType.PUBLIC -> mNotesRepository.addPublicNote(data)
+            NoteType.UNLISTED -> mNotesRepository.addUnlistedNote(data)
         }
     }
 
