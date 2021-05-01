@@ -31,6 +31,12 @@ class ValidateRepositoryImpl @Inject constructor() : ValidateRepository {
         }.addDebugDelay()
     }
 
+    override fun validateContent(content: String): Completable {
+        return Completable.fromAction {
+            ValidateUtil.validateNoteContent(content)
+        }.addDebugDelay()
+    }
+
     override fun validateAddress(address: String): Completable {
         return Completable.fromAction {
             ValidateUtil.validateAddress(address)
