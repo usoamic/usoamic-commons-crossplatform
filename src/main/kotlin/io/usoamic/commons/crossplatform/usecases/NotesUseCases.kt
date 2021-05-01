@@ -18,7 +18,7 @@ class NotesUseCases @Inject constructor(
     private val mValidateRepository: ValidateRepository,
     private val mDbRepository: DbRepository
 ) {
-    fun addNote(password: String, content: String, noteType: NoteType, txSpeed: String): Single<String> {
+    fun addNote(password: String, content: String, noteType: String, txSpeed: String): Single<String> {
         return mValidateRepository.validatePassword(password)
             .andThen(mValidateRepository.validateContent(content))
             .andThen(
@@ -28,7 +28,8 @@ class NotesUseCases @Inject constructor(
                         content = content,
                         txSpeed = TxSpeed.parseString(txSpeed)
                     )
-                    when (noteType) {
+
+                    when (NoteType.valueOf(noteType.toUpperCase())) {
                         NoteType.PUBLIC -> mNotesRepository.addPublicNote(data)
                         NoteType.UNLISTED -> mNotesRepository.addUnlistedNote(data)
                     }
