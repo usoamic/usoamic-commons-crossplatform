@@ -7,6 +7,7 @@ import io.usoamic.commons.crossplatform.models.repository.notes.NoteEntity
 import io.usoamic.commons.crossplatform.models.usecases.notes.NoteItem
 import io.usoamic.commons.crossplatform.repositories.api.DbRepository
 import io.usoamic.commons.crossplatform.repositories.api.NotesRepository
+import io.usoamic.commons.crossplatform.repositories.api.ValidateRepository
 import io.usoamic.usoamickt.enumcls.NoteType
 import io.usoamic.usoamickt.enumcls.TxSpeed
 import java.math.BigInteger
@@ -14,19 +15,25 @@ import javax.inject.Inject
 
 class NotesUseCases @Inject constructor(
     private val mNotesRepository: NotesRepository,
+    private val mValidateRepository: ValidateRepository,
     private val mDbRepository: DbRepository
 ) {
     fun addNote(password: String, content: String, noteType: NoteType, txSpeed: TxSpeed = TxSpeed.Auto): Single<String> {
-        val data = AddNoteRequest(
-            password = password,
-            content = content,
-            txSpeed = txSpeed
-        )
-
-        return when (noteType) {
-            NoteType.PUBLIC -> mNotesRepository.addPublicNote(data)
-            NoteType.UNLISTED -> mNotesRepository.addUnlistedNote(data)
-        }
+        return mValidateRepository.validatePassword(password)
+            .andThen(mValidateRepository.validateContent(content))
+            .andThen(
+                Single.defer {
+                    val data = AddNoteRequest(
+                        password = password,
+                        content = content,
+                        txSpeed = txSpeed
+                    )
+                    when (noteType) {
+                        NoteType.PUBLIC -> mNotesRepository.addPublicNote(data)
+                        NoteType.UNLISTED -> mNotesRepository.addUnlistedNote(data)
+                    }
+                }
+            )
     }
 
     fun getNotes(forceUpdate: Boolean): Single<List<NoteItem>> {
