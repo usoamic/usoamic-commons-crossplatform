@@ -13,6 +13,20 @@ class NotesUseCases @Inject constructor(
     private val mNotesRepository: NotesRepository,
     private val mDbRepository: DbRepository
 ) {
+    fun addPublicNote(password: String, content: String): Single<String> {
+        return mNotesRepository.addPublicNote(
+            password = password,
+            content = content
+        )
+    }
+
+    fun addUnlistedNote(password: String, content: String): Single<String> {
+        return mNotesRepository.addUnlistedNote(
+            password = password,
+            content = content
+        )
+    }
+
     fun getNotes(forceUpdate: Boolean): Single<List<NoteItem>> {
         return if (forceUpdate) {
             getNotesFromNetwork()
