@@ -18,7 +18,7 @@ class NotesUseCases @Inject constructor(
     private val mValidateRepository: ValidateRepository,
     private val mDbRepository: DbRepository
 ) {
-    fun addNote(password: String, content: String, noteType: NoteType, txSpeed: TxSpeed = TxSpeed.Auto): Single<String> {
+    fun addNote(password: String, content: String, noteType: NoteType, txSpeed: String): Single<String> {
         return mValidateRepository.validatePassword(password)
             .andThen(mValidateRepository.validateContent(content))
             .andThen(
@@ -26,7 +26,7 @@ class NotesUseCases @Inject constructor(
                     val data = AddNoteRequest(
                         password = password,
                         content = content,
-                        txSpeed = txSpeed
+                        txSpeed = TxSpeed.parseString(txSpeed)
                     )
                     when (noteType) {
                         NoteType.PUBLIC -> mNotesRepository.addPublicNote(data)
