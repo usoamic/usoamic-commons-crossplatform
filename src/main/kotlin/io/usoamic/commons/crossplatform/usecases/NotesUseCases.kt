@@ -168,6 +168,6 @@ class NotesUseCases @Inject constructor(
     }
 
     companion object {
-        val TAG: String get() = this::class.java.simpleName
+        val TAG: String get() = "NotesUseCases"
     }
 }
