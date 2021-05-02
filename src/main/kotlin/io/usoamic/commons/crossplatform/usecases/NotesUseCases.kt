@@ -10,6 +10,8 @@ import io.usoamic.commons.crossplatform.models.usecases.notes.NoteItem
 import io.usoamic.commons.crossplatform.repositories.api.DbRepository
 import io.usoamic.commons.crossplatform.repositories.api.NotesRepository
 import io.usoamic.commons.crossplatform.repositories.api.ValidateRepository
+import io.usoamic.commons.crossplatform.utils.QueryDestination
+import io.usoamic.commons.crossplatform.utils.logQuery
 import io.usoamic.usoamickt.enumcls.NoteType
 import io.usoamic.usoamickt.enumcls.TxSpeed
 import java.math.BigInteger
@@ -72,11 +74,13 @@ class NotesUseCases @Inject constructor(
         return if (items.isEmpty()) {
             getNotesFromNetwork()
         } else {
+            logQuery(QueryDestination.CACHE, "getNotes")
             Single.just(items.mapEachToItem())
         }
     }
 
     private fun getNotesFromNetwork(): Single<List<NoteItem>> {
+        logQuery(QueryDestination.NETWORK, "getNotes")
         return mNotesRepository.numberOfUserNotes
             .map { size ->
                 val items = mutableListOf<NoteEntity>()
@@ -99,11 +103,13 @@ class NotesUseCases @Inject constructor(
 
     private fun getNoteFromCache(refId: Long): Single<NoteItem> {
         return mDbRepository.getNote(refId)?.let {
+            logQuery(QueryDestination.CACHE, "getNote")
             Single.just(it.toItem())
         } ?: getNoteFromNetwork(refId)
     }
 
     private fun getNoteFromNetwork(refId: Long): Single<NoteItem> {
+        logQuery(QueryDestination.NETWORK, "getNote")
         return mNotesRepository.numberOfPublicNotes
             .map { it.toLong() }
             .map { amount ->
@@ -126,11 +132,13 @@ class NotesUseCases @Inject constructor(
 
     private fun getNoteForAccountFromCache(id: Long): Single<NoteItem> {
         return mDbRepository.getNoteForAccount(id)?.let {
+            logQuery(QueryDestination.CACHE, "getNoteForAccount")
             Single.just(it.toItem())
         } ?: getNoteForAccountFromNetwork(id)
     }
 
     private fun getNoteForAccountFromNetwork(id: Long): Single<NoteItem> {
+        logQuery(QueryDestination.NETWORK, "getNoteForAccount")
         return mNotesRepository.numberOfUserNotes
             .map { it.toLong() }
             .map { amount ->
@@ -149,5 +157,17 @@ class NotesUseCases @Inject constructor(
                         note.toItem()
                     }
             }
+    }
+
+    private fun logQuery(destination: QueryDestination, msg: String) {
+        logQuery(
+            tag = TAG, 
+            destination = destination,
+            msg = msg
+        )
+    }
+
+    companion object {
+        val TAG: String get() = this::class.java.simpleName
     }
 }
