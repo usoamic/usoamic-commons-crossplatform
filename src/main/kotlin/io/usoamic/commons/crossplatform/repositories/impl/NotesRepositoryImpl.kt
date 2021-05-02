@@ -35,7 +35,6 @@ class NotesRepositoryImpl @Inject constructor(
             usoamic.getNote(refId)
         }
             .map(NoteMapper(usoamic.address))
-            .addDebugDelay()
     }
 
     override fun getNoteForAccount(id: BigInteger): Single<NoteEntity> {
@@ -43,7 +42,6 @@ class NotesRepositoryImpl @Inject constructor(
             usoamic.getNoteByAuthor(address, id)
         }
             .map(NoteMapper(usoamic.address))
-            .addDebugDelay()
     }
 
     override fun addPublicNote(data: AddNoteRequest): Single<String> {
@@ -53,7 +51,7 @@ class NotesRepositoryImpl @Inject constructor(
                 content = data.content,
                 txSpeed = data.txSpeed
             )
-        }.addDebugDelay()
+        }
     }
 
     override fun addUnlistedNote(data: AddNoteRequest): Single<String> {
@@ -63,7 +61,6 @@ class NotesRepositoryImpl @Inject constructor(
                 content = data.content,
                 txSpeed = data.txSpeed
             )
-        }.addDebugDelay()
+        }
     }
-
 }
