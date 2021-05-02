@@ -60,6 +60,10 @@ class NotesUseCases @Inject constructor(
             getNotesFromNetwork()
         } else {
             getNotesFromCache()
+        }.map { items ->
+            items.sortedByDescending {
+                it.timestamp
+            }
         }
     }
 
