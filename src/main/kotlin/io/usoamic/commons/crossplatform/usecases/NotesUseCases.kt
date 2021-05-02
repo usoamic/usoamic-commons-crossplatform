@@ -1,6 +1,7 @@
 package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
+import io.usoamic.commons.crossplatform.exceptions.NoteNotFoundThrowable
 import io.usoamic.commons.crossplatform.mappers.local.mapEachToItem
 import io.usoamic.commons.crossplatform.mappers.local.toItem
 import io.usoamic.commons.crossplatform.models.repository.notes.AddNoteRequest
@@ -99,10 +100,23 @@ class NotesUseCases @Inject constructor(
     }
 
     private fun getNoteFromNetwork(refId: Long): Single<NoteItem> {
-        return mNotesRepository.getNote(refId.toBigInteger())
-            .map { note ->
-                mDbRepository.addNote(note)
-                note.toItem()
+        return mNotesRepository.numberOfPublicNotes
+            .map { it.toLong() }
+            .map { amount ->
+                if (amount <= refId) {
+                    throw NoteNotFoundThrowable(
+                        id = refId,
+                        isAuthor = false
+                    )
+                }
+                amount
+            }
+            .flatMap {
+                mNotesRepository.getNote(refId.toBigInteger())
+                    .map { note ->
+                        mDbRepository.addNote(note)
+                        note.toItem()
+                    }
             }
     }
 
@@ -113,10 +127,23 @@ class NotesUseCases @Inject constructor(
     }
 
     private fun getNoteForAccountFromNetwork(id: Long): Single<NoteItem> {
-        return mNotesRepository.getNoteForAccount(id.toBigInteger())
-            .map { note ->
-                mDbRepository.addNote(note)
-                note.toItem()
+        return mNotesRepository.numberOfUserNotes
+            .map { it.toLong() }
+            .map { amount ->
+                if (amount <= id) {
+                    throw NoteNotFoundThrowable(
+                        id = id,
+                        isAuthor = true
+                    )
+                }
+                amount
+            }
+            .flatMap {
+                mNotesRepository.getNoteForAccount(id.toBigInteger())
+                    .map { note ->
+                        mDbRepository.addNote(note)
+                        note.toItem()
+                    }
             }
     }
 }

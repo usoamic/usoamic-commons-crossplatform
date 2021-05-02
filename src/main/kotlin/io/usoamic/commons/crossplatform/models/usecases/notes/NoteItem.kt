@@ -1,14 +1,26 @@
 package io.usoamic.commons.crossplatform.models.usecases.notes
 
-import io.usoamic.usoamickt.enumcls.NoteType
+sealed class NoteItem(
+    open val id: Long,
+    open val content: String,
+    open val author: String,
+    open val timestamp: Long,
+    open val isAuthor: Boolean
+) {
+    data class Public(
+        override val id: Long,
+        override val content: String,
+        override val author: String,
+        override val timestamp: Long,
+        override val isAuthor: Boolean
+    ) : NoteItem(id, content, author, timestamp, isAuthor)
 
-data class NoteItem(
-    val id: Long,
-    val type: NoteType,
-    val refId: Long,
-    val content: String,
-    val author: String,
-    val timestamp: Long,
-    val isAuthor: Boolean
-)
+    data class Unlisted(
+        override val id: Long,
+        override val content: String,
+        override val author: String,
+        override val timestamp: Long,
+        override val isAuthor: Boolean
+    ) : NoteItem(id, content, author, timestamp, isAuthor)
+}
 
