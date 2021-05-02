@@ -110,7 +110,7 @@ class NotesUseCases @Inject constructor(
                 if (amount <= refId) {
                     throw NoteNotFoundThrowable(
                         id = refId,
-                        isAuthor = false
+                        forAuthor = false
                     )
                 }
                 amount
@@ -137,7 +137,7 @@ class NotesUseCases @Inject constructor(
                 if (amount <= id) {
                     throw NoteNotFoundThrowable(
                         id = id,
-                        isAuthor = true
+                        forAuthor = true
                     )
                 }
                 amount
