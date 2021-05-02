@@ -2,6 +2,7 @@ package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
 import io.usoamic.commons.crossplatform.mappers.local.mapEachToItem
+import io.usoamic.commons.crossplatform.mappers.local.toItem
 import io.usoamic.commons.crossplatform.models.repository.notes.AddNoteRequest
 import io.usoamic.commons.crossplatform.models.repository.notes.NoteEntity
 import io.usoamic.commons.crossplatform.models.usecases.notes.NoteItem
@@ -37,6 +38,14 @@ class NotesUseCases @Inject constructor(
             )
     }
 
+    fun getNote(id: Long, forceUpdate: Boolean): Single<NoteItem> {
+        return if (forceUpdate) {
+            getNoteFromNetwork(id)
+        } else {
+            getNoteFromCache(id)
+        }
+    }
+
     fun getNotes(forceUpdate: Boolean): Single<List<NoteItem>> {
         return if (forceUpdate) {
             getNotesFromNetwork()
@@ -69,9 +78,24 @@ class NotesUseCases @Inject constructor(
             }
             .map { items ->
                 items.forEach {
-                    mDbRepository.addNote(it)
+                    mDbRepository.addOwnNote(it)
                 }
                 items.mapEachToItem()
             }
+    }
+
+    private fun getNoteFromCache(refId: Long): Single<NoteItem> {
+        return mDbRepository.getNote(refId)?.let {
+            Single.just(it.toItem())
+        } ?: getNoteFromNetwork(refId)
+    }
+
+    private fun getNoteFromNetwork(refId: Long): Single<NoteItem> {
+        return mNotesRepository.getNote(refId.toBigInteger())
+            .map { note ->
+                mDbRepository.addNote(note)
+                note.toItem()
+            }
+
     }
 }
