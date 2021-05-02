@@ -127,7 +127,7 @@ class NotesUseCases @Inject constructor(
     private fun getNoteForAccountFromCache(id: Long): Single<NoteItem> {
         return mDbRepository.getNoteForAccount(id)?.let {
             Single.just(it.toItem())
-        } ?: getNoteFromNetwork(id)
+        } ?: getNoteForAccountFromNetwork(id)
     }
 
     private fun getNoteForAccountFromNetwork(id: Long): Single<NoteItem> {
