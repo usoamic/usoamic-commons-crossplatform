@@ -12,7 +12,7 @@ interface DbRepository {
     fun getTransactions(): List<TransactionEntity>
 
     fun addNote(data: NoteEntity)
-    fun addOwnNote(data: NoteEntity)
+    fun addNoteForAccount(data: NoteEntity)
 
     fun getNote(refId: Long): NoteEntity?
     fun getNoteForAccount(id: Long): NoteEntity?

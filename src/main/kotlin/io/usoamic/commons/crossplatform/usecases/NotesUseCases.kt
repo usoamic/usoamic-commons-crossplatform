@@ -87,7 +87,7 @@ class NotesUseCases @Inject constructor(
             }
             .map { items ->
                 items.forEach {
-                    mDbRepository.addOwnNote(it)
+                    mDbRepository.addNoteForAccount(it)
                 }
                 items.mapEachToItem()
             }
