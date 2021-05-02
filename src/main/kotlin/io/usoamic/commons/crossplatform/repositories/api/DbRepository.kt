@@ -15,6 +15,7 @@ interface DbRepository {
     fun addOwnNote(data: NoteEntity)
 
     fun getNote(refId: Long): NoteEntity?
+    fun getNoteForAccount(id: Long): NoteEntity?
 
     fun getNotes(): List<NoteEntity>
 

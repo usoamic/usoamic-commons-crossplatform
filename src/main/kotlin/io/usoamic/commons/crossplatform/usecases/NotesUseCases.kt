@@ -38,11 +38,19 @@ class NotesUseCases @Inject constructor(
             )
     }
 
-    fun getNote(id: Long, forceUpdate: Boolean): Single<NoteItem> {
+    fun getNote(refId: Long, forceUpdate: Boolean): Single<NoteItem> {
         return if (forceUpdate) {
-            getNoteFromNetwork(id)
+            getNoteFromNetwork(refId)
         } else {
-            getNoteFromCache(id)
+            getNoteFromCache(refId)
+        }
+    }
+
+    fun getNoteForAccount(id: Long, forceUpdate: Boolean): Single<NoteItem> {
+        return if (forceUpdate) {
+            getNoteForAccountFromNetwork(id)
+        } else {
+            getNoteForAccountFromCache(id)
         }
     }
 
@@ -96,6 +104,19 @@ class NotesUseCases @Inject constructor(
                 mDbRepository.addNote(note)
                 note.toItem()
             }
+    }
 
+    private fun getNoteForAccountFromCache(id: Long): Single<NoteItem> {
+        return mDbRepository.getNoteForAccount(id)?.let {
+            Single.just(it.toItem())
+        } ?: getNoteFromNetwork(id)
+    }
+
+    private fun getNoteForAccountFromNetwork(id: Long): Single<NoteItem> {
+        return mNotesRepository.getNoteForAccount(id.toBigInteger())
+            .map { note ->
+                mDbRepository.addNote(note)
+                note.toItem()
+            }
     }
 }
