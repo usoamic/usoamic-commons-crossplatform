@@ -1,8 +1,8 @@
 package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
-import io.usoamic.commons.crossplatform.models.withdraw.WithdrawCoin
-import io.usoamic.commons.crossplatform.models.withdraw.WithdrawData
+import io.usoamic.commons.crossplatform.models.repository.withdraw.WithdrawRequest
+import io.usoamic.commons.crossplatform.models.usecases.withdraw.WithdrawCoinTicker
 import io.usoamic.commons.crossplatform.repositories.api.EthereumRepository
 import io.usoamic.commons.crossplatform.repositories.api.TokenRepository
 import io.usoamic.commons.crossplatform.repositories.api.ValidateRepository
@@ -16,7 +16,7 @@ class WithdrawUseCases @Inject constructor(
     private val mEthereumRepository: EthereumRepository
 ) {
     fun withdraw(
-        coin: WithdrawCoin,
+        coin: WithdrawCoinTicker,
         password: String,
         to: String,
         value: String,
@@ -27,17 +27,17 @@ class WithdrawUseCases @Inject constructor(
             .andThen(mValidateRepository.validateTransferValue(value))
             .andThen(
                 Single.defer {
-                    val data = WithdrawData(
+                    val data = WithdrawRequest(
                         password = password,
                         to = to,
                         value = BigDecimal(value),
                         txSpeed = TxSpeed.parseString(txSpeed)
                     )
                     when (coin) {
-                        WithdrawCoin.ETH -> {
+                        WithdrawCoinTicker.ETH -> {
                             mEthereumRepository.withdraw(data)
                         }
-                        WithdrawCoin.USO -> {
+                        WithdrawCoinTicker.USO -> {
                             mTokenRepository.withdraw(data)
                         }
                     }

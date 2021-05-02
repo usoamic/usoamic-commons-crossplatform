@@ -8,4 +8,5 @@ interface ValidateRepository {
     fun validatePrivateKey(privateKey: String): Completable
     fun validateAddress(address: String): Completable
     fun validateTransferValue(value: String): Completable
+    fun validateContent(content: String): Completable
 }

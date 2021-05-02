@@ -1,4 +1,4 @@
-package io.usoamic.commons.crossplatform.models.base
+package io.usoamic.commons.crossplatform.models.common.base
 
 sealed class ErrorArguments(open val throwable: Throwable) {
     val message get() = throwable.message

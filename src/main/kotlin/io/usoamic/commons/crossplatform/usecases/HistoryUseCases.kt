@@ -1,7 +1,10 @@
 package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
-import io.usoamic.commons.crossplatform.models.history.TransactionItem
+import io.usoamic.commons.crossplatform.mappers.local.mapEachToItem
+import io.usoamic.commons.crossplatform.mappers.local.toItem
+import io.usoamic.commons.crossplatform.models.repository.history.TransactionEntity
+import io.usoamic.commons.crossplatform.models.usecases.history.TransactionItem
 import io.usoamic.commons.crossplatform.repositories.api.DbRepository
 import io.usoamic.commons.crossplatform.repositories.api.TokenRepository
 
@@ -27,32 +30,32 @@ class HistoryUseCases @Inject constructor(
     }
 
     private fun getTransactionsFromCache(): Single<List<TransactionItem>> {
-        val items = mDbRepository.getTransactions()
-        return if(items.isEmpty()) {
+        val entities = mDbRepository.getTransactions()
+        return if(entities.isEmpty()) {
             getTransactionsFromNetwork()
         }
         else {
-            Single.just(items)
+            Single.just(entities.mapEachToItem())
         }
     }
 
     private fun getTransactionsFromNetwork(): Single<List<TransactionItem>> {
         return mTokenRepository.numberOfUserTransactions
             .map { size ->
-                val items = mutableListOf<TransactionItem>()
+                val items = mutableListOf<TransactionEntity>()
                 var i = BigInteger.ZERO
                 while (i < size) {
                     val tx = mTokenRepository.getTransactionForAccount(i).blockingGet()
                     items.add(tx)
                     i++
                 }
-                items.toList()
+                items
             }
             .map { items ->
                 items.forEach {
                     mDbRepository.addTransactionItem(it)
                 }
-                items
+                items.mapEachToItem()
             }
     }
 }

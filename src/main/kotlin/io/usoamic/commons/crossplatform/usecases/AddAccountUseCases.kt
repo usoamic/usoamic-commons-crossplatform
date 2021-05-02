@@ -1,7 +1,8 @@
 package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
-import io.usoamic.commons.crossplatform.models.add.AddAccountModel
+import io.usoamic.commons.crossplatform.mappers.local.toItem
+import io.usoamic.commons.crossplatform.models.usecases.add.AddAccountModel
 import io.usoamic.commons.crossplatform.repositories.api.EthereumRepository
 import io.usoamic.commons.crossplatform.repositories.api.ValidateRepository
 import javax.inject.Inject
@@ -22,5 +23,8 @@ class AddAccountUseCases @Inject constructor(
             .andThen(
                 mEthereumRepository.addAccount(privateKey, password)
             )
+            .map {
+                it.toItem()
+            }
     }
 }

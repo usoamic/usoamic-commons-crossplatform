@@ -3,10 +3,10 @@ package io.usoamic.commons.crossplatform.repositories.impl
 import io.reactivex.Single
 import io.usoamic.commons.crossplatform.extensions.addDebugDelay
 import io.usoamic.commons.crossplatform.extensions.privateKey
-import io.usoamic.commons.crossplatform.models.add.AddAccountModel
-import io.usoamic.commons.crossplatform.models.ethereum.AccountCredentials
-import io.usoamic.commons.crossplatform.models.ethereum.toDomain
-import io.usoamic.commons.crossplatform.models.withdraw.WithdrawData
+import io.usoamic.commons.crossplatform.mappers.entity.toEntity
+import io.usoamic.commons.crossplatform.models.repository.add.AddAccountEntity
+import io.usoamic.commons.crossplatform.models.repository.ethereum.AccountCredentialsEntity
+import io.usoamic.commons.crossplatform.models.repository.withdraw.WithdrawRequest
 import io.usoamic.commons.crossplatform.repositories.api.EthereumRepository
 import io.usoamic.usoamickt.core.Usoamic
 import org.web3j.crypto.Credentials
@@ -20,9 +20,9 @@ import javax.inject.Inject
 class EthereumRepositoryImpl @Inject constructor(
     private val usoamic: Usoamic
 ) : EthereumRepository {
-    override fun addAccount(privateKey: String, password: String): Single<AddAccountModel> {
+    override fun addAccount(privateKey: String, password: String): Single<AddAccountEntity> {
         return Single.fromCallable {
-            AddAccountModel(
+            AddAccountEntity(
                 usoamic.importPrivateKey(password, privateKey)
             )
         }
@@ -36,13 +36,13 @@ class EthereumRepositoryImpl @Inject constructor(
             .addDebugDelay()
     }
 
-    override fun createCredentials(): Single<AccountCredentials> {
+    override fun createCredentials(): Single<AccountCredentialsEntity> {
         return Single.fromCallable {
             var credentials: Credentials
             do {
                 credentials = Credentials.create(Keys.createEcKeyPair())
             } while (!WalletUtils.isValidPrivateKey(credentials.privateKey))
-            credentials.toDomain()
+            credentials.toEntity()
         }
             .addDebugDelay()
     }
@@ -63,7 +63,7 @@ class EthereumRepositoryImpl @Inject constructor(
                 .addDebugDelay()
         }
 
-    override fun withdraw(data: WithdrawData): Single<String> {
+    override fun withdraw(data: WithdrawRequest): Single<String> {
         return Single.fromCallable {
             val value = Convert.toWei(data.value, Convert.Unit.ETHER)
             usoamic.transferEth(

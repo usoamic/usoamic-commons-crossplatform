@@ -5,16 +5,16 @@
 ext.deps = [:]
 def versions = [:]
 
-def isAndroid = false
+def isAndroid = true
 
 versions.kotlin = '1.4.32'
 versions.rxjava2 = '2.2.19'
 versions.rxkotlin2 = '2.4.0'
 
 if (isAndroid) {
-    versions.usoamickt = '1.2.1-android'
+    versions.usoamickt = '1.2.2-android'
 } else {
-    versions.usoamickt = '1.2.1'
+    versions.usoamickt = '1.2.2-desktop'
 }
 
 versions.validateutilkt = '1.0.0'

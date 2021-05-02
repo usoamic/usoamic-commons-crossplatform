@@ -4,9 +4,9 @@ import io.reactivex.Single
 import io.usoamic.commons.crossplatform.exceptions.ContractNullThrowable
 import io.usoamic.commons.crossplatform.extensions.addDebugDelay
 import io.usoamic.commons.crossplatform.extensions.orZero
-import io.usoamic.commons.crossplatform.models.history.TransactionItem
-import io.usoamic.commons.crossplatform.models.history.toDomain
-import io.usoamic.commons.crossplatform.models.withdraw.WithdrawData
+import io.usoamic.commons.crossplatform.mappers.entity.toEntity
+import io.usoamic.commons.crossplatform.models.repository.history.TransactionEntity
+import io.usoamic.commons.crossplatform.models.repository.withdraw.WithdrawRequest
 import io.usoamic.commons.crossplatform.repositories.api.TokenRepository
 import io.usoamic.usoamickt.core.Usoamic
 import io.usoamic.usoamickt.model.Transaction
@@ -39,7 +39,7 @@ class TokenRepositoryImpl @Inject constructor(
     override val numberOfUserTransactions: Single<BigInteger>
         get() {
             return Single.fromCallable {
-                usoamic.getNumberOfTransactionsByAddress(usoamic.address).orZero()
+                usoamic.getNumberOfTransactionsByAddress(address).orZero()
             }.addDebugDelay()
         }
 
@@ -49,16 +49,16 @@ class TokenRepositoryImpl @Inject constructor(
         }.addDebugDelay()
     }
 
-    override fun getTransactionForAccount(txId: BigInteger): Single<TransactionItem> {
+    override fun getTransactionForAccount(txId: BigInteger): Single<TransactionEntity> {
         return Single.fromCallable {
-            usoamic.getTransactionByAddress(usoamic.address, txId)
+            usoamic.getTransactionByAddress(address, txId)
         }.map {
-            it.toDomain(address)
+            it.toEntity(address)
         }
         // .addDebugDelay()
     }
 
-    override fun withdraw(data: WithdrawData): Single<String> {
+    override fun withdraw(data: WithdrawRequest): Single<String> {
         return Single.fromCallable {
             val value = Coin.fromCoin(data.value).toSat()
             usoamic.transferUso(
