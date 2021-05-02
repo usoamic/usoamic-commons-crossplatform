@@ -8,6 +8,7 @@ data class NoteItem(
     val refId: Long,
     val content: String,
     val author: String,
-    val timestamp: Long
+    val timestamp: Long,
+    val isAuthor: Boolean
 )
 

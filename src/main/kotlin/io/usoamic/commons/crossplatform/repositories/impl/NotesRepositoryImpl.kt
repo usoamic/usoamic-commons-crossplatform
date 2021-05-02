@@ -3,7 +3,7 @@ package io.usoamic.commons.crossplatform.repositories.impl
 import io.reactivex.Single
 import io.usoamic.commons.crossplatform.extensions.addDebugDelay
 import io.usoamic.commons.crossplatform.extensions.orZero
-import io.usoamic.commons.crossplatform.mappers.entity.toEntity
+import io.usoamic.commons.crossplatform.mappers.entity.NoteMapper
 import io.usoamic.commons.crossplatform.models.repository.notes.AddNoteRequest
 import io.usoamic.commons.crossplatform.models.repository.notes.NoteEntity
 import io.usoamic.commons.crossplatform.repositories.api.NotesRepository
@@ -33,17 +33,17 @@ class NotesRepositoryImpl @Inject constructor(
     override fun getNote(refId: BigInteger): Single<NoteEntity> {
         return Single.fromCallable {
             usoamic.getNote(refId)
-        }.map {
-            it.toEntity()
         }
+            .map(NoteMapper(usoamic.address))
+            .addDebugDelay()
     }
 
     override fun getNoteForAccount(id: BigInteger): Single<NoteEntity> {
         return Single.fromCallable {
             usoamic.getNoteByAuthor(address, id)
-        }.map {
-            it.toEntity()
         }
+            .map(NoteMapper(usoamic.address))
+            .addDebugDelay()
     }
 
     override fun addPublicNote(data: AddNoteRequest): Single<String> {

@@ -10,7 +10,8 @@ fun NoteEntity.toItem(): NoteItem {
         refId = noteRefId.toLong(),
         content = content,
         author = author,
-        timestamp = timestamp.toLong()
+        timestamp = timestamp.toLong(),
+        isAuthor = isAuthor
     )
 }
 

@@ -9,6 +9,7 @@ data class NoteEntity(
     val noteRefId: BigInteger,
     val content: String,
     val author: String,
-    val timestamp: BigInteger
+    val timestamp: BigInteger,
+    val isAuthor: Boolean
 )
 
