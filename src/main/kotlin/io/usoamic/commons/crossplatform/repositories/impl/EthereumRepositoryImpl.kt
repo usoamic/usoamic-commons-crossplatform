@@ -8,7 +8,7 @@ import io.usoamic.commons.crossplatform.models.repository.add.AddAccountEntity
 import io.usoamic.commons.crossplatform.models.repository.ethereum.AccountCredentialsEntity
 import io.usoamic.commons.crossplatform.models.repository.withdraw.WithdrawRequest
 import io.usoamic.commons.crossplatform.repositories.api.EthereumRepository
-import io.usoamic.usoamickt.account.impl.corex.UsoamicAccountImpl
+import io.usoamic.usoamickt.account.api.UsoamicAccount
 import org.web3j.crypto.Credentials
 import org.web3j.crypto.Keys
 import org.web3j.crypto.WalletUtils
@@ -18,7 +18,7 @@ import java.math.BigInteger
 import javax.inject.Inject
 
 class EthereumRepositoryImpl @Inject constructor(
-    private val usoamicAccount: UsoamicAccountImpl
+    private val usoamicAccount: UsoamicAccount
 ) : EthereumRepository {
     override fun addAccount(privateKey: String, password: String): Single<AddAccountEntity> {
         return Single.fromCallable {

@@ -8,8 +8,8 @@ import io.usoamic.commons.crossplatform.mappers.entity.toEntity
 import io.usoamic.commons.crossplatform.models.repository.history.TransactionEntity
 import io.usoamic.commons.crossplatform.models.repository.withdraw.WithdrawRequest
 import io.usoamic.commons.crossplatform.repositories.api.TokenRepository
+import io.usoamic.usoamickt.account.api.UsoamicAccount
 import io.usoamic.usoamickt.account.impl.corex.UsoamicAccountImpl
-import io.usoamic.usoamickt.corex.Usoamic
 import io.usoamic.usoamickt.model.Transaction
 import io.usoamic.usoamickt.util.Coin
 import java.math.BigDecimal
@@ -17,14 +17,14 @@ import java.math.BigInteger
 import javax.inject.Inject
 
 class TokenRepositoryImpl @Inject constructor(
-    private val usoamic: UsoamicAccountImpl
+    private val usoamicAccount: UsoamicAccount
 ) : TokenRepository {
-    private val address = usoamic.address
+    private val address = usoamicAccount.address
 
     override val usoBalance: Single<BigDecimal>
         get() {
             return Single.fromCallable {
-                usoamic.getUsoBalance().toCoin()
+                usoamicAccount.getUsoBalance().toCoin()
             }
                 .addDebugDelay()
         }
@@ -32,7 +32,7 @@ class TokenRepositoryImpl @Inject constructor(
     override val usoSupply: Single<BigDecimal>
         get() {
             return Single.fromCallable {
-                usoamic.getSupply().toCoin()
+                usoamicAccount.getSupply().toCoin()
             }
                 .addDebugDelay()
         }
@@ -40,19 +40,19 @@ class TokenRepositoryImpl @Inject constructor(
     override val numberOfUserTransactions: Single<BigInteger>
         get() {
             return Single.fromCallable {
-                usoamic.getNumberOfTransactionsByAddress(address).orZero()
+                usoamicAccount.getNumberOfTransactionsByAddress(address).orZero()
             }.addDebugDelay()
         }
 
     override fun getTransaction(txId: BigInteger): Single<Transaction> {
         return Single.fromCallable {
-            usoamic.getTransaction(txId)
+            usoamicAccount.getTransaction(txId)
         }.addDebugDelay()
     }
 
     override fun getTransactionForAccount(txId: BigInteger): Single<TransactionEntity> {
         return Single.fromCallable {
-            usoamic.getTransactionByAddress(address, txId)
+            usoamicAccount.getTransactionByAddress(address, txId)
         }.map {
             it.toEntity(address)
         }
@@ -62,7 +62,7 @@ class TokenRepositoryImpl @Inject constructor(
     override fun withdraw(data: WithdrawRequest): Single<String> {
         return Single.fromCallable {
             val value = Coin.fromCoin(data.value).toSat()
-            usoamic.transferUso(
+            usoamicAccount.transferUso(
                 password = data.password,
                 to = data.to,
                 value = value,
