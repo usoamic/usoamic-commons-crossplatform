@@ -8,7 +8,8 @@ import io.usoamic.commons.crossplatform.mappers.entity.toEntity
 import io.usoamic.commons.crossplatform.models.repository.history.TransactionEntity
 import io.usoamic.commons.crossplatform.models.repository.withdraw.WithdrawRequest
 import io.usoamic.commons.crossplatform.repositories.api.TokenRepository
-import io.usoamic.usoamickt.core.Usoamic
+import io.usoamic.usoamickt.account.impl.corex.UsoamicAccountImpl
+import io.usoamic.usoamickt.corex.Usoamic
 import io.usoamic.usoamickt.model.Transaction
 import io.usoamic.usoamickt.util.Coin
 import java.math.BigDecimal
@@ -16,7 +17,7 @@ import java.math.BigInteger
 import javax.inject.Inject
 
 class TokenRepositoryImpl @Inject constructor(
-    private val usoamic: Usoamic
+    private val usoamic: UsoamicAccountImpl
 ) : TokenRepository {
     private val address = usoamic.address
 

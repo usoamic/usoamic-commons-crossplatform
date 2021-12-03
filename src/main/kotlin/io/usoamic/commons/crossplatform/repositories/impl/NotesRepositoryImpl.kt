@@ -7,12 +7,13 @@ import io.usoamic.commons.crossplatform.mappers.entity.NoteMapper
 import io.usoamic.commons.crossplatform.models.repository.notes.AddNoteRequest
 import io.usoamic.commons.crossplatform.models.repository.notes.NoteEntity
 import io.usoamic.commons.crossplatform.repositories.api.NotesRepository
-import io.usoamic.usoamickt.core.Usoamic
+import io.usoamic.usoamickt.account.impl.corex.UsoamicAccountImpl
+import io.usoamic.usoamickt.corex.Usoamic
 import java.math.BigInteger
 import javax.inject.Inject
 
 class NotesRepositoryImpl @Inject constructor(
-    private val usoamic: Usoamic
+    private val usoamic: UsoamicAccountImpl,
 ) : NotesRepository {
     private val address = usoamic.address
 
@@ -34,14 +35,14 @@ class NotesRepositoryImpl @Inject constructor(
         return Single.fromCallable {
             usoamic.getNote(refId)
         }
-            .map(NoteMapper(usoamic.address))
+            .map(NoteMapper(address))
     }
 
     override fun getNoteForAccount(id: BigInteger): Single<NoteEntity> {
         return Single.fromCallable {
             usoamic.getNoteByAuthor(address, id)
         }
-            .map(NoteMapper(usoamic.address))
+            .map(NoteMapper(address))
     }
 
     override fun addPublicNote(data: AddNoteRequest): Single<String> {
