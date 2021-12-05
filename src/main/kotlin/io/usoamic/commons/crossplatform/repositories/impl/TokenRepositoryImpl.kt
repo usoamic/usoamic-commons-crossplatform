@@ -61,14 +61,14 @@ class TokenRepositoryImpl @Inject constructor(
         }.addDebugDelay()
     }
 
-    override fun getTransactionForAccount(txId: BigInteger): Single<TransactionEntity> {
-        return getTransactionForAccount(
+    override fun getTransactionByAddress(txId: BigInteger): Single<TransactionEntity> {
+        return getTransactionByAddress(
             owner = address,
             txId = txId
         )
     }
 
-    override fun getTransactionForAccount(owner: String, txId: BigInteger): Single<TransactionEntity> {
+    override fun getTransactionByAddress(owner: String, txId: BigInteger): Single<TransactionEntity> {
         return Single.fromCallable {
             usoamic.getTransactionByAddress(owner, txId)
         }.map {

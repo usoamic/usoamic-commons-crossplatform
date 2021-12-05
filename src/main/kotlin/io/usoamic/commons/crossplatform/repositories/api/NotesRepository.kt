@@ -14,12 +14,12 @@ interface NotesRepository {
         refId: BigInteger
     ): Single<NoteEntity>
 
-    fun getNoteForAccount(
+    fun getNoteByAddress(
         id: BigInteger,
         address: String
     ): Single<NoteEntity>
 
-    fun getNoteForAccount(
+    fun getNoteByAddress(
         id: BigInteger
     ): Single<NoteEntity>
 

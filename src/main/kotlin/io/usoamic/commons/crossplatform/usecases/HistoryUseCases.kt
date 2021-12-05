@@ -2,7 +2,6 @@ package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
 import io.usoamic.commons.crossplatform.mappers.local.mapEachToItem
-import io.usoamic.commons.crossplatform.mappers.local.toItem
 import io.usoamic.commons.crossplatform.models.repository.history.TransactionEntity
 import io.usoamic.commons.crossplatform.models.usecases.history.TransactionItem
 import io.usoamic.commons.crossplatform.repositories.api.DbRepository
@@ -45,7 +44,7 @@ class HistoryUseCases @Inject constructor(
                 val items = mutableListOf<TransactionEntity>()
                 var i = BigInteger.ZERO
                 while (i < size) {
-                    val tx = mTokenRepository.getTransactionForAccount(i).blockingGet()
+                    val tx = mTokenRepository.getTransactionByAddress(i).blockingGet()
                     items.add(tx)
                     i++
                 }
