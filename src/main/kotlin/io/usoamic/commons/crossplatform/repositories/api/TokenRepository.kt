@@ -22,6 +22,11 @@ interface TokenRepository {
         txId: BigInteger
     ): Single<TransactionEntity>
 
+    fun getTransactionForAccount(
+        owner: String,
+        txId: BigInteger
+    ): Single<TransactionEntity>
+
     fun withdraw(
         data: WithdrawRequest
     ): Single<String>

@@ -50,12 +50,19 @@ class TokenRepositoryImpl @Inject constructor(
     }
 
     override fun getTransactionForAccount(txId: BigInteger): Single<TransactionEntity> {
+        return getTransactionForAccount(
+            owner = address,
+            txId = txId
+        )
+    }
+
+    override fun getTransactionForAccount(owner: String, txId: BigInteger): Single<TransactionEntity> {
         return Single.fromCallable {
-            usoamic.getTransactionByAddress(address, txId)
+            usoamic.getTransactionByAddress(owner, txId)
         }.map {
-            it.toEntity(address)
+            it.toEntity(owner)
         }
-        // .addDebugDelay()
+            .addDebugDelay()
     }
 
     override fun withdraw(data: WithdrawRequest): Single<String> {
