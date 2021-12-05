@@ -4,6 +4,7 @@ import io.reactivex.Single
 import io.usoamic.commons.crossplatform.exceptions.ContractNullThrowable
 import io.usoamic.commons.crossplatform.extensions.addDebugDelay
 import io.usoamic.commons.crossplatform.extensions.orZero
+import io.usoamic.commons.crossplatform.mappers.entity.toCoin
 import io.usoamic.commons.crossplatform.mappers.entity.toEntity
 import io.usoamic.commons.crossplatform.models.repository.history.TransactionEntity
 import io.usoamic.commons.crossplatform.models.repository.withdraw.WithdrawRequest
@@ -36,12 +37,23 @@ class TokenRepositoryImpl @Inject constructor(
                 .addDebugDelay()
         }
 
+    override val usoVersion: Single<String>
+        get() = Single.fromCallable {
+            usoamic.getVersion() ?: throw ContractNullThrowable("usoVersion")
+        }.addDebugDelay()
+
     override val numberOfUserTransactions: Single<BigInteger>
         get() {
             return Single.fromCallable {
                 usoamic.getNumberOfTransactionsByAddress(address).orZero()
             }.addDebugDelay()
         }
+
+    override fun getBalance(address: String): Single<BigDecimal> {
+        return Single.fromCallable {
+            usoamic.balanceOf(address).toCoin()
+        }.addDebugDelay()
+    }
 
     override fun getTransaction(txId: BigInteger): Single<Transaction> {
         return Single.fromCallable {
@@ -78,9 +90,5 @@ class TokenRepositoryImpl @Inject constructor(
             .addDebugDelay()
     }
 
-    private fun BigInteger?.toCoin(): BigDecimal {
-        return this?.let {
-            Coin.fromSat(it).toBigDecimal()
-        } ?: throw ContractNullThrowable("mapToCoin()")
-    }
+
 }
