@@ -22,7 +22,7 @@ interface TokenRepository {
         txId: BigInteger
     ): Single<Transaction>
 
-    fun getTransactionByAddress(
+    fun getTransactionForAccount(
         txId: BigInteger
     ): Single<TransactionEntity>
 

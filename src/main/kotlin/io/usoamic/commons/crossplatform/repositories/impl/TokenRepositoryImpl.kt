@@ -61,7 +61,7 @@ class TokenRepositoryImpl @Inject constructor(
         }.addDebugDelay()
     }
 
-    override fun getTransactionByAddress(txId: BigInteger): Single<TransactionEntity> {
+    override fun getTransactionForAccount(txId: BigInteger): Single<TransactionEntity> {
         return getTransactionByAddress(
             owner = address,
             txId = txId

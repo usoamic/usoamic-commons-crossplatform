@@ -15,11 +15,11 @@ interface NotesRepository {
     ): Single<NoteEntity>
 
     fun getNoteByAddress(
-        id: BigInteger,
-        address: String
+        owner: String,
+        id: BigInteger
     ): Single<NoteEntity>
 
-    fun getNoteByAddress(
+    fun getNoteForAccount(
         id: BigInteger
     ): Single<NoteEntity>
 
