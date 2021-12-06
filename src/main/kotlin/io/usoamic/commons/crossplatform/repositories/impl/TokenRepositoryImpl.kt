@@ -4,8 +4,8 @@ import io.reactivex.Single
 import io.usoamic.commons.crossplatform.exceptions.ContractNullThrowable
 import io.usoamic.commons.crossplatform.extensions.addDebugDelay
 import io.usoamic.commons.crossplatform.extensions.orZero
+import io.usoamic.commons.crossplatform.mappers.entity.TransactionMapper
 import io.usoamic.commons.crossplatform.mappers.entity.toCoin
-import io.usoamic.commons.crossplatform.mappers.entity.toEntity
 import io.usoamic.commons.crossplatform.models.repository.history.TransactionEntity
 import io.usoamic.commons.crossplatform.models.repository.withdraw.WithdrawRequest
 import io.usoamic.commons.crossplatform.repositories.api.TokenRepository
@@ -71,9 +71,7 @@ class TokenRepositoryImpl @Inject constructor(
     override fun getTransactionByAddress(owner: String, txId: BigInteger): Single<TransactionEntity> {
         return Single.fromCallable {
             usoamic.getTransactionByAddress(owner, txId)
-        }.map {
-            it.toEntity(owner)
-        }
+        }.map(TransactionMapper(owner))
             .addDebugDelay()
     }
 
