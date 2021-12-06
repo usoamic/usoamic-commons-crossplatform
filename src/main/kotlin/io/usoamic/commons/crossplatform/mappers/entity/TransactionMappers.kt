@@ -7,7 +7,7 @@ import io.usoamic.usoamickt.model.Transaction
 import io.usoamic.usoamickt.util.Coin
 
 internal fun Transaction.toEntity(owner: String): TransactionEntity {
-    if (isExist) {
+    if (!isExist) {
         throw TransactionNotFoundThrowable(
             id = txId.toLong(),
             address = owner

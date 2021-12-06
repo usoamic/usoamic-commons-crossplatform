@@ -11,7 +11,7 @@ internal class NoteMapper(
     private val forAuthor: Boolean = false
 ) : Function<Note, NoteEntity> {
     override fun apply(note: Note): NoteEntity {
-        if (note.isExist) {
+        if (!note.isExist) {
             throw NoteNotFoundThrowable(
                 id = note.noteId.toLong(),
                 forAuthor = forAuthor
