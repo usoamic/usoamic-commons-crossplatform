@@ -21,10 +21,10 @@ versions.validateutilkt = '1.0.0'
 versions.gson = "2.8.5"
 
 if (isAndroid) {
-    versions.web3j = "4.8.4"
+    versions.web3j = "4.8.8-android"
 }
 else {
-    versions.web3j = "4.6.0-android"
+    versions.web3j = "4.8.8"
 }
 
 versions.dagger = '2.27'
