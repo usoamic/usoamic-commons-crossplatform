@@ -14,7 +14,7 @@ versions.rxkotlin2 = '2.4.0'
 if (isAndroid) {
     versions.usoamickt = '1.2.2-android'
 } else {
-    versions.usoamickt = '1.2.3-desktop-beta.2'
+    versions.usoamickt = '1.2.3-desktop-beta.3'
 }
 
 versions.validateutilkt = '1.0.0'
