@@ -87,7 +87,7 @@ class NotesUseCases @Inject constructor(
                 var i = BigInteger.ZERO
 
                 while (i < size) {
-                    val note = mNotesRepository.getNoteByAddress(i).blockingGet()
+                    val note = mNotesRepository.getNoteForAccount(i).blockingGet()
                     items.add(note)
                     i++
                 }
@@ -151,7 +151,7 @@ class NotesUseCases @Inject constructor(
                 amount
             }
             .flatMap {
-                mNotesRepository.getNoteByAddress(id.toBigInteger())
+                mNotesRepository.getNoteForAccount(id.toBigInteger())
                     .map { note ->
                         mDbRepository.addNote(note)
                         note.toItem()

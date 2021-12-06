@@ -44,7 +44,7 @@ class HistoryUseCases @Inject constructor(
                 val items = mutableListOf<TransactionEntity>()
                 var i = BigInteger.ZERO
                 while (i < size) {
-                    val tx = mTokenRepository.getTransactionByAddress(i).blockingGet()
+                    val tx = mTokenRepository.getTransactionForAccount(i).blockingGet()
                     items.add(tx)
                     i++
                 }
