@@ -5,7 +5,7 @@
 ext.deps = [:]
 def versions = [:]
 
-def isAndroid = true
+def isAndroid = false
 
 versions.kotlin = '1.4.32'
 versions.rxjava2 = '2.2.19'
