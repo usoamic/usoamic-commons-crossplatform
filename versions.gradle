@@ -12,19 +12,19 @@ versions.rxjava2 = '2.2.19'
 versions.rxkotlin2 = '2.4.0'
 
 if (isAndroid) {
-    versions.usoamickt = '1.2.2-android'
+    versions.usoamickt = '1.2.3-android-beta.2'
 } else {
-    versions.usoamickt = '1.2.2-desktop'
+    versions.usoamickt = '1.2.3-desktop-beta.3'
 }
 
 versions.validateutilkt = '1.0.0'
 versions.gson = "2.8.5"
 
 if (isAndroid) {
-    versions.web3j = "4.8.4"
+    versions.web3j = "4.6.0-android"
 }
 else {
-    versions.web3j = "4.6.0-android"
+    versions.web3j = "4.6.0"
 }
 
 versions.dagger = '2.27'

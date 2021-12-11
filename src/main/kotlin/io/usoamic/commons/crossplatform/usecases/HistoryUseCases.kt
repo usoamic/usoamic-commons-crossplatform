@@ -2,7 +2,6 @@ package io.usoamic.commons.crossplatform.usecases
 
 import io.reactivex.Single
 import io.usoamic.commons.crossplatform.mappers.local.mapEachToItem
-import io.usoamic.commons.crossplatform.mappers.local.toItem
 import io.usoamic.commons.crossplatform.models.repository.history.TransactionEntity
 import io.usoamic.commons.crossplatform.models.usecases.history.TransactionItem
 import io.usoamic.commons.crossplatform.repositories.api.DbRepository

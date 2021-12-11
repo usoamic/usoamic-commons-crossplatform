@@ -7,10 +7,27 @@ import java.math.BigInteger
 
 interface NotesRepository {
     val numberOfPublicNotes: Single<BigInteger>
+
     val numberOfUserNotes: Single<BigInteger>
 
-    fun getNote(refId: BigInteger): Single<NoteEntity>
-    fun getNoteForAccount(id: BigInteger): Single<NoteEntity>
-    fun addPublicNote(data: AddNoteRequest): Single<String>
-    fun addUnlistedNote(data: AddNoteRequest): Single<String>
+    fun getNote(
+        refId: BigInteger
+    ): Single<NoteEntity>
+
+    fun getNoteByAddress(
+        owner: String,
+        id: BigInteger
+    ): Single<NoteEntity>
+
+    fun getNoteForAccount(
+        id: BigInteger
+    ): Single<NoteEntity>
+
+    fun addPublicNote(
+        data: AddNoteRequest
+    ): Single<String>
+
+    fun addUnlistedNote(
+        data: AddNoteRequest
+    ): Single<String>
 }

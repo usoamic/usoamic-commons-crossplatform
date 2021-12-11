@@ -12,13 +12,22 @@ interface TokenRepository {
 
     val usoSupply: Single<BigDecimal>
 
+    val usoVersion: Single<String>
+
     val numberOfUserTransactions: Single<BigInteger>
+
+    fun getBalance(address: String): Single<BigDecimal>
 
     fun getTransaction(
         txId: BigInteger
     ): Single<Transaction>
 
     fun getTransactionForAccount(
+        txId: BigInteger
+    ): Single<TransactionEntity>
+
+    fun getTransactionByAddress(
+        owner: String,
         txId: BigInteger
     ): Single<TransactionEntity>
 

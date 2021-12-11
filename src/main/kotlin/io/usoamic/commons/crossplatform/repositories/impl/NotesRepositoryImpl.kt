@@ -37,11 +37,27 @@ class NotesRepositoryImpl @Inject constructor(
             .map(NoteMapper(usoamic.address))
     }
 
+    override fun getNoteByAddress(owner: String, id: BigInteger): Single<NoteEntity> {
+        return Single.fromCallable {
+            usoamic.getNoteByAuthor(
+                author = owner,
+                noteId = id
+            )
+        }.map(NoteMapper(usoamic.address))
+    }
+
     override fun getNoteForAccount(id: BigInteger): Single<NoteEntity> {
         return Single.fromCallable {
-            usoamic.getNoteByAuthor(address, id)
-        }
-            .map(NoteMapper(usoamic.address))
+            usoamic.getNoteByAuthor(
+                author = address,
+                noteId = id
+            )
+        }.map(
+            NoteMapper(
+                address = usoamic.address,
+                forAuthor = true
+            )
+        )
     }
 
     override fun addPublicNote(data: AddNoteRequest): Single<String> {

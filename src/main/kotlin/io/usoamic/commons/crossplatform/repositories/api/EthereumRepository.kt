@@ -8,12 +8,15 @@ import java.math.BigDecimal
 import java.math.BigInteger
 
 interface EthereumRepository {
-    fun createCredentials(): Single<AccountCredentialsEntity>
-    fun addAccount(privateKey: String, password: String): Single<AddAccountEntity>
-    fun getAddress(password: String): Single<String>
+    val ethBalance: Single<BigDecimal>
+    val ethHeight: Single<BigInteger>
+
+    fun getBalance(address: String): Single<BigDecimal>
     fun withdraw(
         data: WithdrawRequest
     ): Single<String>
-    val ethBalance: Single<BigDecimal>
-    val ethHeight: Single<BigInteger>
+
+    fun createCredentials(): Single<AccountCredentialsEntity>
+    fun addAccount(privateKey: String, password: String): Single<AddAccountEntity>
+    fun getAddress(password: String): Single<String>
 }
