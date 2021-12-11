@@ -12,7 +12,7 @@ versions.rxjava2 = '2.2.19'
 versions.rxkotlin2 = '2.4.0'
 
 if (isAndroid) {
-    versions.usoamickt = '1.2.2-android'
+    versions.usoamickt = '1.2.3-android-beta.1'
 } else {
     versions.usoamickt = '1.2.3-desktop-beta.3'
 }
